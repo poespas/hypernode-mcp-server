@@ -70,12 +70,26 @@ class CommandExecutor:
             )
         
         try:
-            process = await asyncio.create_subprocess_exec(
-                *command.split(),
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-                cwd=cwd
-            )
+            # Check if command contains shell features that require shell=True
+            shell_features = ['|', '&&', '||', ';', '>', '<', '>>', '<<', '&', '(', ')', '$', '`']
+            use_shell = any(feature in command for feature in shell_features)
+            
+            if use_shell:
+                # Use shell=True for commands with pipes, redirects, etc.
+                process = await asyncio.create_subprocess_shell(
+                    command,
+                    stdout=asyncio.subprocess.PIPE,
+                    stderr=asyncio.subprocess.PIPE,
+                    cwd=cwd
+                )
+            else:
+                # Use subprocess_exec for simple commands (more secure)
+                process = await asyncio.create_subprocess_exec(
+                    *command.split(),
+                    stdout=asyncio.subprocess.PIPE,
+                    stderr=asyncio.subprocess.PIPE,
+                    cwd=cwd
+                )
             
             stdout, stderr = await asyncio.wait_for(
                 process.communicate(),
