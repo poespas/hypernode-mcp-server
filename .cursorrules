@@ -1,0 +1,52 @@
+# Hypernode MCP Server - Coding Standards
+
+## Project Structure
+- `server.py` - Main MCP server entry point
+- `tools/` - Directory containing all MCP tools
+- `tools/vhosts/` - VHost management tools
+- `tools/incidents/` - Incident management tools
+- `tools/block_attack/` - Attack blocking tools
+- `tools/nginx_logs/` - Nginx log analysis tools
+- `tools/shell/` - Shell command execution tools
+- `utils/` - Shared utilities and helpers
+
+## Code Standards
+- Use type hints for all function parameters and return values
+- Follow PEP 8 style guidelines
+- Use descriptive variable and function names
+- Add docstrings to all functions and classes
+- Handle errors gracefully with proper error messages
+- Use async/await for I/O operations
+- Validate input parameters using Pydantic models
+
+## MCP Tool Standards
+- Each tool should be in its own file under the appropriate directory
+- Tools should return structured data (JSON) when possible
+- Use proper error handling for command execution
+- Implement streaming responses for long-running operations
+- Validate command outputs and handle edge cases
+
+## Security Standards
+- Never execute dangerous commands (rm, etc.) without proper validation
+- Sanitize all user inputs
+- Use subprocess with proper security measures
+- Log all command executions for audit purposes
+- Implement rate limiting for resource-intensive operations
+
+## Testing Standards
+- Test all commands before implementing tools
+- Verify command outputs and error conditions
+- Test edge cases and error handling
+- Ensure proper cleanup after operations
+
+## Documentation Standards
+- Keep README.md updated with usage examples
+- Document all tool parameters and return values
+- Include examples of tool usage
+- Maintain changelog for significant changes
+
+## Available Commands
+- `virtualenv` - Available for creating virtual environments
+- `hypernode-manage-vhosts` - For vhost management
+- `hypernode-systemctl block_attack` - For attack blocking
+- `pnl` (hypernode-parse-nginx-log) - For nginx log analysis 
