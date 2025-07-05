@@ -6,7 +6,6 @@ from fastmcp import FastMCP
 import logging
 import os
 from typing import Dict, Any, Optional
-
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -15,16 +14,20 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Create FastMCP server instance
-mcp = FastMCP("Hypernode MCP Server", stateless_http=True)
+mcp = FastMCP("Hypernode MCP Server")
 
 # Import command executor utility
 from utils.command_executor import CommandExecutor
+
+# Auto-register all tools
+from tools import register_all_tools
+register_all_tools(mcp)
 
 @mcp.tool
 async def list_vhosts() -> Dict[str, Any]:
     """
     List all vhosts configured on the Hypernode with their settings.
-    
+
     Returns:
         Dict containing the list of vhosts and their configurations
     """

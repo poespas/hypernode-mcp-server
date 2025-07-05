@@ -1,27 +1,25 @@
 """
-VHost management tool that inherits from GenericTool.
-Demonstrates how to create MCP tools using the base class.
+Hello World tool for Hypernode MCP Server.
 """
 
-from typing import Dict, Any, Optional
-from .generic import GenericTool, ToolCollection
+from typing import Dict, Any
+from .generic import BaseTool, tool_registry
 
-class HelloWorldTool(GenericTool):
-    """
-    Tool for managing vhosts on Hypernode.
-    Inherits from GenericTool to get common functionality.
-    """
+class HelloWorldTool(BaseTool):
+    """Hello World tool implementation."""
     
-    def __init__(self):
-        """Initialize the VHost tool."""
-        super().__init__("VHostTool")
-    
-    @mcp.tool(
-        name="hello_world",
-        description="Hello World Tool",
-    )
-    async def execute(self, **kwargs) -> ToolResult:
-        return "Hello World"
+    async def tool_hello_world(self) -> Dict[str, Any]:
+        """
+        Simple hello world tool for testing.
+        
+        Returns:
+            Dict containing a hello world message
+        """
+        return {
+            "message": "Hello World from Hypernode MCP Server!",
+            "status": "success"
+        }
 
-tool_collection = ToolCollection()
-tool_collection.add_tool(HelloWorldTool())
+# Create and register the tool instance automatically
+hello_world_tool = HelloWorldTool()
+tool_registry.register_tool(hello_world_tool)
