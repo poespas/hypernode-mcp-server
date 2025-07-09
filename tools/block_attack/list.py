@@ -11,7 +11,7 @@ class BlockAttackListTool(BaseTool):
     
     async def tool_list_attacks(self) -> Dict[str, Any]:
         """
-        List all available attack blocking options on the Hypernode.
+        List all available but not necessarily enabled known attack-blocking options on the Hypernode.
         
         Returns:
             Dict containing the list of available attack types
