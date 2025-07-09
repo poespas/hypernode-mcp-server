@@ -548,6 +548,55 @@ export MCP_LOG_LEVEL=DEBUG
 python server.py
 ```
 
+## Running Tests
+
+This project uses [pytest](https://docs.pytest.org/) for testing. All tests are located in the `tests/` directory, which mirrors the structure of the source code.
+
+### Running Tests Locally (Docker)
+
+To run all tests in the official Hypernode Docker image, use the provided script:
+
+```bash
+./runtests.sh
+```
+
+This will:
+- Start the Docker container (`docker.hypernode.com/byteinternet/hypernode-bookworm-docker-php84-mysql80`)
+- Set up a Python virtual environment
+- Install all dependencies
+- Run the test suite with pytest
+
+### Running Tests Locally (Host Python)
+
+If you have all dependencies installed locally, you can also run:
+
+```bash
+pytest tests/
+```
+
+### Test Structure
+- All tests are in the `tests/` directory, mirroring the source code structure.
+- Each tool or module should have its own test file (e.g., `tests/tools/test_hello_world.py`).
+- Tests are written as **synchronous** functions (no async/await).
+
+### Writing New Tests
+- Create a new test file in the appropriate subdirectory under `tests/`.
+- Use `pytest` conventions: test files start with `test_`, test classes start with `Test`, and test functions start with `test_`.
+- Example:
+
+```python
+import pytest
+from tools.hello_world import HelloWorldTool
+
+def test_hello_world():
+    tool = HelloWorldTool()
+    result = tool.tool_hello_world().__await__().__next__()
+    assert result["message"] == "Hello World from Hypernode MCP Server!"
+```
+
+### Continuous Integration
+- All tests are run automatically on each push and pull request to `main` via GitHub Actions using the official Hypernode Docker image.
+
 ## License
 
 This project is licensed under the MIT License.
