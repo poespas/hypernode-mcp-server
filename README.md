@@ -575,8 +575,15 @@ pytest tests/
 ```
 
 ### Test Structure
-- All tests are in the `tests/` directory, mirroring the source code structure.
-- Each tool or module should have its own test file (e.g., `tests/tools/test_hello_world.py`).
+- All tests are in the `tests/` directory, **mirroring the structure of the source code exactly**.
+- **Every test file must be placed in a subdirectory that matches the source code path.**
+- **Test filenames must include the full path to ensure uniqueness across the entire test suite.**
+    - For example:
+        - `tools/vhosts/list.py` → `tests/tools/vhosts/test_vhosts_list.py`
+        - `tools/vhosts/modify.py` → `tests/tools/vhosts/test_vhosts_modify.py`
+        - `tools/incidents/list.py` → `tests/tools/incidents/test_incidents_list.py`
+        - `tools/incidents/get.py` → `tests/tools/incidents/test_incidents_get.py`
+- Each tool or module should have its own test file with a unique name that includes the category and action.
 - Tests are written as **synchronous** functions (no async/await).
 
 ### Writing New Tests
